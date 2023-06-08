@@ -2,8 +2,8 @@ namespace StructureData;
 
 public class LinkedList <T>
 {
-    private Node<T>? First { get; set; }
-    private Node<T>? Last { get; set; }
+    public Node<T>? First { get; set; }
+    public Node<T>? Last { get; set; }
     public int Count { get; private set; }
 
     public LinkedList()
@@ -63,7 +63,7 @@ public class LinkedList <T>
         Count++;
     }
     
-    public void AddAfter(Node<T> node, Node<T>? newNode)
+    public void AddAfter(Node<T>? node, Node<T>? newNode)
     {
 
         if (node == null)
@@ -168,7 +168,7 @@ public class LinkedList <T>
         Count++;
     }
     
-    public void AddBefore(Node<T> node, Node<T>? newNode)
+    public void AddBefore(Node<T>? node, Node<T>? newNode)
     {
 
         if (node == null)
@@ -234,11 +234,13 @@ public class LinkedList <T>
         {
             First = null;
             Last = null;
+            Count--;
             return;
         }
 
         First.Next.Previous = null;
         First = First.Next;
+        Count--;
     }
 
     public void RemoveLast()
@@ -252,13 +254,14 @@ public class LinkedList <T>
         {
             First = null;
             Last = null;
+            Count--;
             return;
         }
 
-        if (Last == null) return;
-        if (Last.Previous == null) return;
+        if (Last?.Previous == null) return;
         Last.Previous.Next = null;
         Last = Last.Previous;
+        Count--;
     }
     
     public void AddFirst(T value)

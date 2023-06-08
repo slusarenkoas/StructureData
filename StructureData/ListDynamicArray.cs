@@ -6,7 +6,7 @@ public class ListDynamicArray <T> where T : IComparable
     public int Count { get; private set; }
     public int Capacity { get; private set; }
     private T?[] DynamicArray { get; set; }
-
+    
     public ListDynamicArray()
     {
         Capacity = 5;
@@ -27,7 +27,7 @@ public class ListDynamicArray <T> where T : IComparable
 
     public void Clear()
     {
-        for (int i = 0; i < Count; i++)
+        for (var i = 0; i < Count; i++)
         {
             DynamicArray[i] = default;
             Count = 0;
@@ -36,7 +36,7 @@ public class ListDynamicArray <T> where T : IComparable
 
     public void Print()
     {
-        for (int i = 0; i < Count; i++)
+        for (var i = 0; i < Count; i++)
         { 
             Console.Write(DynamicArray[i] + " ");
         }
@@ -120,7 +120,7 @@ public class ListDynamicArray <T> where T : IComparable
     public void Reverse()
     {
         var current = Count - 1;
-        for (int i = 0; i < Count / 2; i++, current--)
+        for (var i = 0; i < Count / 2; i++, current--)
         {
             (DynamicArray[i], DynamicArray[current]) = (DynamicArray[current], DynamicArray[i]);
         }
@@ -144,7 +144,7 @@ public class ListDynamicArray <T> where T : IComparable
 
         T?[] temp = new T[Capacity];
         
-        for (int i = 0; i < Count; i++)
+        for (var i = 0; i < Count; i++)
         {
             temp[i] = DynamicArray[i];
         }
@@ -170,4 +170,29 @@ public class ListDynamicArray <T> where T : IComparable
 
         return marker;
     }
+    
+    public T this[int index]
+    {
+        get
+        {
+            if (index >= 0 && index < Count)
+            {
+                return DynamicArray[index];
+            }
+
+            throw new IndexOutOfRangeException();
+        }
+        set
+        {
+            if (index >= 0 && index < Count)
+            {
+                DynamicArray[index] = value;
+            }
+            else
+            {
+                throw new IndexOutOfRangeException();
+            }
+        }
+    }
+
 }
