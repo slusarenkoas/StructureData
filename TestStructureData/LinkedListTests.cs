@@ -9,11 +9,10 @@ namespace TestStructureData;
         public void AddAfter_WhenNodeIsNull_ShouldThrowException()
         {
             // Arrange
-            var list = new StructureData.LinkedList<int>();
-            var newNode = new Node<int>(5);
+            var list = new StructureData.LinkedList<string?>();
 
             // Act and Assert
-            Assert.Throws<ArgumentNullException>(() => list.AddAfter(null, newNode));
+            Assert.Throws<ArgumentNullException>(() => list.AddAfter(null, "test"));
         }
 
         [Test]
@@ -21,19 +20,17 @@ namespace TestStructureData;
     {
         // Arrange
         var list = new StructureData.LinkedList<int>();
-        var existingNode = new Node<int>(1);
-        var newNode = new Node<int>(5);
-        list.AddFirst(existingNode);
+        list.AddFirst(1);
 
         // Act
-        list.AddAfter(existingNode, newNode);
+        list.AddAfter(1, 5);
 
         // Assert
         Assert.That(list.Count, Is.EqualTo(2));
         Assert.Multiple(() =>
         {
-            Assert.That(list.First, Is.EqualTo(existingNode));
-            Assert.That(list.Last, Is.EqualTo(newNode));
+            if (list.First != null) Assert.That(list.First.Value, Is.EqualTo(1));
+            if (list.Last != null) Assert.That(list.Last.Value, Is.EqualTo(5));
         });
     }
 
@@ -42,19 +39,17 @@ namespace TestStructureData;
     {
         // Arrange
         var list = new StructureData.LinkedList<int>();
-            var firstNode = new Node<int>(1);
-            var lastNode = new Node<int>(2);
-            list.AddFirst(firstNode);
+        list.AddFirst(1);
 
             // Act
-            list.AddAfter(firstNode, lastNode);
+            list.AddAfter(1, 2);
 
             // Assert
             Assert.That(list.Count, Is.EqualTo(2));
         Assert.Multiple(() =>
         {
-            Assert.That(list.First, Is.EqualTo(firstNode));
-            Assert.That(list.Last, Is.EqualTo(lastNode));
+            if (list.First != null) Assert.That(list.First.Value, Is.EqualTo(1));
+            if (list.Last != null) Assert.That(list.Last.Value, Is.EqualTo(2));
         });
     }
 
@@ -63,23 +58,21 @@ namespace TestStructureData;
     {
         // Arrange
         var list = new StructureData.LinkedList<int>();
-            var firstNode = new Node<int>(1);
-            var middleNode = new Node<int>(2);
-            var lastNode = new Node<int>(3);
-            list.AddFirst(firstNode);
-            list.AddLast(lastNode);
+        list.AddFirst(1);
+            list.AddLast(3);
 
             // Act
-            list.AddAfter(firstNode, middleNode);
+            list.AddAfter(1, 2);
 
             // Assert
             Assert.That(list.Count, Is.EqualTo(3));
         Assert.Multiple(() =>
         {
-            Assert.That(list.First, Is.EqualTo(firstNode));
-            Assert.That(list.Last, Is.EqualTo(lastNode));
-            Assert.That(firstNode.Next, Is.EqualTo(middleNode));
-            Assert.That(middleNode.Next, Is.EqualTo(lastNode));
+            if (list.First != null) Assert.That(list.First.Value, Is.EqualTo(1));
+            if (list.Last != null) Assert.That(list.Last.Value, Is.EqualTo(3));
+            if (list.First == null) return;
+            if (list.First.Next != null)
+                Assert.That(list.First.Next.Value, Is.EqualTo(2));
         });
     }
 
@@ -87,7 +80,7 @@ namespace TestStructureData;
         public void AddBefore_WhenNodeIsNull_ShouldThrowException()
         {
             // Arrange
-            var list = new StructureData.LinkedList<int>();
+            var list = new StructureData.LinkedList<Node<int>?>();
             var newNode = new Node<int>(5);
 
             // Act and Assert
@@ -99,62 +92,61 @@ namespace TestStructureData;
     {
         // Arrange
         var list = new StructureData.LinkedList<int>();
-        var existingNode = new Node<int>(1);
-        var newNode = new Node<int>(5);
-        list.AddFirst(existingNode);
+        list.AddFirst(1);
 
         // Act
-        list.AddBefore(existingNode, newNode);
+        list.AddBefore(1, 5);
 
         // Assert
         Assert.That(list.Count, Is.EqualTo(2));
         Assert.Multiple(() =>
         {
-            Assert.That(list.First, Is.EqualTo(newNode));
-            Assert.That(list.Last, Is.EqualTo(existingNode));
+            if (list.First != null) Assert.That(list.First.Value, Is.EqualTo(5));
+            if (list.Last != null) Assert.That(list.Last.Value, Is.EqualTo(1));
         });
     }
 
     [Test]
         public void AddBefore_WhenNodeIsFirst_ShouldAddNodeAsFirst()
-        {
-            // Arrange
-            var list = new StructureData.LinkedList<int>();
-            var firstNode = new Node<int>(1);
-            var secondNode = new Node<int>(2);
-            list.AddFirst(secondNode);
+    {
+        // Arrange
+        var list = new StructureData.LinkedList<int>();
+        list.AddFirst(2);
 
             // Act
-            list.AddBefore(secondNode, firstNode);
+            list.AddBefore(2, 1);
 
             // Assert
             Assert.That(list.Count, Is.EqualTo(2));
-            Assert.That(list.First, Is.EqualTo(firstNode));
-            Assert.That(list.Last, Is.EqualTo(secondNode));
-        }
+        Assert.Multiple(() =>
+        {
+            if (list.First != null) Assert.That(list.First.Value, Is.EqualTo(1));
+            if (list.Last != null) Assert.That(list.Last.Value, Is.EqualTo(2));
+        });
+    }
 
-        [Test]
+    [Test]
         public void AddBefore_WhenNodeIsInMiddle_ShouldAddNodeBeforeGivenNode()
     {
         // Arrange
         var list = new StructureData.LinkedList<int>();
             var firstNode = new Node<int>(1);
             var middleNode = new Node<int>(2);
-            var lastNode = new Node<int>(3);
-            list.AddFirst(firstNode);
-            list.AddLast(lastNode);
+            list.AddFirst(1);
+            list.AddLast(3);
 
             // Act
-            list.AddBefore(lastNode, middleNode);
+            list.AddBefore(3, 2);
 
             // Assert
             Assert.That(list.Count, Is.EqualTo(3));
         Assert.Multiple(() =>
         {
-            Assert.That(list.First, Is.EqualTo(firstNode));
-            Assert.That(list.Last, Is.EqualTo(lastNode));
-            Assert.That(firstNode.Next, Is.EqualTo(middleNode));
-            Assert.That(middleNode.Next, Is.EqualTo(lastNode));
+            if (list.First != null) Assert.That(list.First.Value, Is.EqualTo(1));
+            if (list.Last != null) Assert.That(list.Last.Value, Is.EqualTo(3));
+            if (firstNode.Next == null) return;
+            Assert.That(firstNode.Next.Value, Is.EqualTo(2));
+            if (middleNode.Next != null) Assert.That(middleNode.Next.Value, Is.EqualTo(3));
         });
     }
 
@@ -173,8 +165,7 @@ namespace TestStructureData;
     {
         // Arrange
         var list = new StructureData.LinkedList<int>();
-            var node = new Node<int>(5);
-            list.AddFirst(node);
+            list.AddFirst(5);
 
             // Act
             list.RemoveFirst();
@@ -193,12 +184,9 @@ namespace TestStructureData;
     {
         // Arrange
         var list = new StructureData.LinkedList<int>();
-            var firstNode = new Node<int>(1);
-            var secondNode = new Node<int>(2);
-            var thirdNode = new Node<int>(3);
-            list.AddFirst(firstNode);
-            list.AddLast(secondNode);
-            list.AddLast(thirdNode);
+        list.AddFirst(1);
+            list.AddLast(2);
+            list.AddLast(3);
 
             // Act
             list.RemoveFirst();
@@ -207,8 +195,8 @@ namespace TestStructureData;
             Assert.That(list.Count, Is.EqualTo(2));
         Assert.Multiple(() =>
         {
-            if (list.First != null) Assert.That(list.First.Value, Is.EqualTo(secondNode.Value));
-            if (list.Last != null) Assert.That(list.Last.Value, Is.EqualTo(thirdNode.Value));
+            if (list.First != null) Assert.That(list.First.Value, Is.EqualTo(2));
+            if (list.Last != null) Assert.That(list.Last.Value, Is.EqualTo(3));
         });
     }
         
@@ -227,8 +215,7 @@ namespace TestStructureData;
     {
         // Arrange
         var list = new StructureData.LinkedList<int>();
-            var node = new Node<int>(5);
-            list.AddFirst(node);
+        list.AddFirst(1);
 
             // Act
             list.RemoveLast();
@@ -247,12 +234,9 @@ namespace TestStructureData;
     {
         // Arrange
         var list = new StructureData.LinkedList<int>();
-            var firstNode = new Node<int>(1);
-            var secondNode = new Node<int>(2);
-            var thirdNode = new Node<int>(3);
-            list.AddFirst(firstNode);
-            list.AddLast(secondNode);
-            list.AddLast(thirdNode);
+        list.AddFirst(1);
+            list.AddLast(2);
+            list.AddLast(3);
 
             // Act
             list.RemoveLast();
@@ -261,8 +245,8 @@ namespace TestStructureData;
             Assert.That(list.Count, Is.EqualTo(2));
         Assert.Multiple(() =>
         {
-            Assert.That(list.First, Is.EqualTo(firstNode));
-            Assert.That(list.Last, Is.EqualTo(secondNode));
+            if (list.First != null) Assert.That(list.First.Value, Is.EqualTo(1));
+            if (list.Last != null) Assert.That(list.Last.Value, Is.EqualTo(2));
         });
     }
 
@@ -271,17 +255,16 @@ namespace TestStructureData;
     {
         // Arrange
         var list = new StructureData.LinkedList<int>();
-            var newNode = new Node<int>(5);
 
-            // Act
-            list.AddFirst(newNode);
+        // Act
+            list.AddFirst(5);
 
             // Assert
             Assert.That(list.Count, Is.EqualTo(1));
         Assert.Multiple(() =>
         {
-            Assert.That(list.First, Is.EqualTo(newNode));
-            Assert.That(list.Last, Is.EqualTo(newNode));
+            if (list.First != null) Assert.That(list.First.Value, Is.EqualTo(5));
+            if (list.Last != null) Assert.That(list.Last.Value, Is.EqualTo(5));
         });
     }
 
@@ -290,56 +273,53 @@ namespace TestStructureData;
     {
         // Arrange
         var list = new StructureData.LinkedList<int>();
-            var firstNode = new Node<int>(1);
-            var newNode = new Node<int>(2);
-            list.AddFirst(firstNode);
+        list.AddFirst(1);
 
             // Act
-            list.AddFirst(newNode);
+            list.AddFirst(2);
 
             // Assert
             Assert.That(list.Count, Is.EqualTo(2));
         Assert.Multiple(() =>
         {
-            Assert.That(list.First, Is.EqualTo(newNode));
-            Assert.That(list.Last, Is.EqualTo(firstNode));
+            if (list.First != null) Assert.That(list.First.Value, Is.EqualTo(2));
+            if (list.Last != null) Assert.That(list.Last.Value, Is.EqualTo(1));
         });
     }
 
     [Test]
         public void AddLast_WhenListIsEmpty_ShouldAddNodeAsLast()
-        {
-            // Arrange
-            var list = new StructureData.LinkedList<int>();
-            var newNode = new Node<int>(5);
-
-            // Act
-            list.AddLast(newNode);
+    {
+        // Arrange
+        var list = new StructureData.LinkedList<int>();
+        // Act
+            list.AddLast(5);
 
             // Assert
             Assert.That(list.Count, Is.EqualTo(1));
-            Assert.That(list.First, Is.EqualTo(newNode));
-            Assert.That(list.Last, Is.EqualTo(newNode));
-        }
+        Assert.Multiple(() =>
+        {
+            if (list.First != null) Assert.That(list.First.Value, Is.EqualTo(5));
+            if (list.Last != null) Assert.That(list.Last.Value, Is.EqualTo(5));
+        });
+    }
 
-        [Test]
+    [Test]
         public void AddLast_WhenListIsNotEmpty_ShouldAddNodeAsLast()
     {
         // Arrange
         var list = new StructureData.LinkedList<int>();
-            var lastNode = new Node<int>(1);
-            var newNode = new Node<int>(2);
-            list.AddFirst(lastNode);
+        list.AddFirst(1);
 
             // Act
-            list.AddLast(newNode);
+            list.AddLast(2);
 
             // Assert
             Assert.That(list.Count, Is.EqualTo(2));
         Assert.Multiple(() =>
         {
-            Assert.That(list.First, Is.EqualTo(lastNode));
-            Assert.That(list.Last, Is.EqualTo(newNode));
+            if (list.First != null) Assert.That(list.First.Value, Is.EqualTo(1));
+            if (list.Last != null) Assert.That(list.Last.Value, Is.EqualTo(2));
         });
     }
 }

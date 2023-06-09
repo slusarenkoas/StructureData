@@ -4,7 +4,6 @@ public class Stack <T>
 {
     private Node<T>? First { get; set; }
     private int Count { get; set; }
-
     public void Push(T value)
     {
         var newNode = new Node<T>(value);
@@ -22,22 +21,7 @@ public class Stack <T>
         }
     }
     
-    public void Push(Node<T> newNode)
-    {
-        if (First == null)
-        {
-            First = newNode;
-            Count++;
-        }
-        else
-        {
-            newNode.Next = First;
-            First = newNode;
-            Count++;
-        }
-    }
-    
-    public Node<T> Pop()
+    public T Pop()
     {
         if (First == null)
         {
@@ -48,17 +32,17 @@ public class Stack <T>
         First = First.Next;
         if (First != null) First.Next = null;
         Count--;
-        return current;
+        return current.Value;
     }
 
-    public Node<T> Peek()
+    public T Peek()
     {
         if (First == null)
         {
             throw new InvalidOperationException("Stack is empty");
         }
 
-        return First;
+        return First.Value;
     }
 
     public void Clear()
@@ -88,4 +72,19 @@ public class Stack <T>
 
         return false;
     }
+    
+    /*public void Push(Node<T> newNode)
+    {
+        if (First == null)
+        {
+            First = newNode;
+            Count++;
+        }
+        else
+        {
+            newNode.Next = First;
+            First = newNode;
+            Count++;
+        }
+    }*/
 }

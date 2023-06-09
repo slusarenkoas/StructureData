@@ -3,7 +3,6 @@ namespace StructureData;
 public class Queue<T>
 {
     private Node<T>? First { get; set; }
-    
     private Node<T>? Last { get; set; }
     private int Count { get; set; }
 
@@ -54,8 +53,31 @@ public class Queue<T>
             Count++;
         }
     }
+    
+    public T Dequeue()
+    {
+        if (First == null)
+        {
+            throw new InvalidOperationException("Queue is empty");
+        }
 
-    public void Enqueue(Node<T> newNode)
+        var current = First;
+        First = First.Next;
+        if (First != null) First.Previous = null;
+        Count--;
+        return current.Value;
+    }
+
+    public T Peek()
+    {
+        if (First == null)
+        {
+            throw new InvalidOperationException("Stack is empty");
+        }
+
+        return First.Value;
+    }
+    /*public void Enqueue(Node<T> newNode)
     {
         if (First == null)
         {
@@ -70,29 +92,5 @@ public class Queue<T>
             Last = newNode;
             Count++;
         }
-    }
-
-    public Node<T> Dequeue()
-    {
-        if (First == null)
-        {
-            throw new InvalidOperationException("Queue is empty");
-        }
-
-        var current = First;
-        First = First.Next;
-        if (First != null) First.Previous = null;
-        Count--;
-        return current;
-    }
-
-    public Node<T> Peek()
-    {
-        if (First == null)
-        {
-            throw new InvalidOperationException("Stack is empty");
-        }
-
-        return First;
-    }
+    }*/
 }
