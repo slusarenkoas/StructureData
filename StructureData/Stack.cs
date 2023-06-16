@@ -2,8 +2,8 @@ namespace StructureData;
 
 public class Stack <T>
 {
-    private Node<T>? First { get; set; }
-    private int Count { get; set; }
+    public Node<T>? First { get; private set; }
+    public int Count { get; private set; }
     public void Push(T value)
     {
         var newNode = new Node<T>(value);

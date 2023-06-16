@@ -116,7 +116,7 @@ public class LinkedList <T>
     {
         if (First == null)
         {
-            throw new InvalidOperationException("Node is null");
+            throw new InvalidOperationException("LinkedList is empty");
         }
 
         if (First.Next == null)
@@ -136,7 +136,7 @@ public class LinkedList <T>
     {
         if (First == null)
         {
-            throw new InvalidOperationException("Node is null");
+            throw new InvalidOperationException("LinkedList is empty");
         }
 
         if (First.Next == null)

@@ -194,5 +194,4 @@ public class ListDynamicArray <T> where T : IComparable
             }
         }
     }
-
 }

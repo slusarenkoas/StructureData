@@ -3,7 +3,7 @@ namespace StructureData;
 
 public class LinkedListGeneric <T>
 {
-    private List<T>? LinkedList { get; set; }
+    public List<T>? LinkedList { get; set; }
 
     public LinkedListGeneric()
     {
@@ -18,11 +18,21 @@ public class LinkedListGeneric <T>
 
     public void RemoveFirst()
     {
+        if (LinkedList.Count == 0)
+        {
+            throw new InvalidOperationException("LinkedList is empty");
+        }
+        
         LinkedList?.RemoveAt(0);
     }
 
     public void RemoveLast()
     {
+        if (LinkedList.Count == 0)
+        {
+            throw new InvalidOperationException("LinkedList is empty");
+        }
+        
         LinkedList?.RemoveAt(LinkedList.Count - 1);
     }
     
@@ -31,6 +41,7 @@ public class LinkedListGeneric <T>
         if (LinkedList is { Count: 0 })
         {
             LinkedList.Add(value);
+            return;
         }
 
         if (LinkedList == null) throw new ArgumentNullException(nameof(LinkedList), "LinkedList is null");
@@ -38,7 +49,7 @@ public class LinkedListGeneric <T>
         {
             if (!LinkedList[i]!.Equals(movableValue)) continue;
             LinkedList.Insert(i + 1, value);
-            break;
+            return;
         }
 
         throw new InvalidOperationException("Value not found in the LinkedList");
@@ -49,6 +60,7 @@ public class LinkedListGeneric <T>
         if (LinkedList is { Count: 0 })
         {
             LinkedList.Add(value);
+            return;
         }
 
         if (LinkedList != null && LinkedList[0]!.Equals(movableValue))
@@ -62,7 +74,7 @@ public class LinkedListGeneric <T>
         {
             if (!LinkedList[i]!.Equals(movableValue)) continue;
             LinkedList.Insert(i, value);
-            break;
+            return;
         }
 
         throw new InvalidOperationException("Value not found in the LinkedList");
@@ -73,6 +85,7 @@ public class LinkedListGeneric <T>
         if (LinkedList is { Count: 0 })
         {
             LinkedList.Add(value);
+            return;
         }
         
         LinkedList?.Insert(0,value);
@@ -81,5 +94,29 @@ public class LinkedListGeneric <T>
     public void AddLast(T value)
     {
         LinkedList?.Add(value);
+    }
+    
+    public T this[int index]
+    {
+        get
+        {
+            if (index >= 0 && index < Count())
+            {
+                return LinkedList[index];
+            }
+
+            throw new IndexOutOfRangeException();
+        }
+        set
+        {
+            if (index >= 0 && index < Count())
+            {
+                LinkedList[index] = value;
+            }
+            else
+            {
+                throw new IndexOutOfRangeException();
+            }
+        }
     }
 }

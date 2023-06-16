@@ -2,9 +2,9 @@ namespace StructureData;
 
 public class Queue<T>
 {
-    private Node<T>? First { get; set; }
-    private Node<T>? Last { get; set; }
-    private int Count { get; set; }
+    public Node<T>? First { get; private set; }
+    public Node<T>? Last { get; private set; }
+    public int Count { get; private set; }
 
     public void Clear()
     {
@@ -47,8 +47,12 @@ public class Queue<T>
         }
         else
         {
-            Last.Next = newNode;
-            newNode.Previous = Last;
+            if (Last != null)
+            {
+                Last.Next = newNode;
+                newNode.Previous = Last;
+            }
+
             Last = newNode;
             Count++;
         }
